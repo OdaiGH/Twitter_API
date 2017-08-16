@@ -1,3 +1,5 @@
+from requests_oauthlib import OAuth1, OAuth2
+from requests import get,post
 class TwitterApi(object):
 	BASE_URL = "https://api.twitter.com/1.1/"
 	HTTP_ERROR_CODES = {
@@ -44,4 +46,9 @@ class TwitterApi(object):
 	272 : "You are not muting the specified user."
 	}
 
-	pass
+	def __init__(self, consumer_key,consumer_secret,access_token_key,access_token_secret):
+		keys = [consumer_key,consumer_secret,access_token_key,access_token_secret]
+		if all(keys):
+			self._auth = OAuth1(consumer_key,consumer_secret,access_token_key,access_token_secret)
+		else:
+			raise Exception("You should fill all keys")
